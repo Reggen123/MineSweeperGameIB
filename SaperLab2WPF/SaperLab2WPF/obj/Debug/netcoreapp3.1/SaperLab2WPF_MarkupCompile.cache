@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\App.xaml
-3972148803
+3-761229294
 
-17-648899589
+171138075665
 193316372649
-MainWindow.xaml;WindowNotMain.xaml;WindowStatistics.xaml;
+MainWindow.xaml;WindowSettings.xaml;WindowStatistics.xaml;
 
 False
 

@@ -374,7 +374,7 @@ namespace SaperLab2WPF
                 return openSettingsCommand ??
                   (openSettingsCommand = new RelayCommand(obj =>
                   {
-                      WindowNotMain window = new WindowNotMain();
+                      WindowSettings window = new WindowSettings();
                       window.Show();
                   }));
             }

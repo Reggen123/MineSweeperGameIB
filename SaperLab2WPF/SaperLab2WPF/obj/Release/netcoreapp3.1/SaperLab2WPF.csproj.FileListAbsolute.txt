@@ -6,14 +6,12 @@ C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\bin\Release\netcoreapp3.1\
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\bin\Release\netcoreapp3.1\SaperLab2WPF.pdb
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\bin\Release\netcoreapp3.1\Microsoft.Xaml.Behaviors.dll
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\MainWindow.g.cs
-C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\WindowNotMain.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\WindowStatistics.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\App.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\SaperLab2WPF_MarkupCompile.cache
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\SaperLab2WPF_MarkupCompile.lref
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\MainWindow.baml
-C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\WindowNotMain.baml
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\WindowStatistics.baml
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\SaperLab2WPF.g.resources
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\SaperLab2WPF.Resource1.resources
@@ -26,3 +24,5 @@ C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\SaperLab2WPF.dll
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\SaperLab2WPF.pdb
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\SaperLab2WPF.genruntimeconfig.cache
+C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\WindowSettings.g.cs
+C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Release\netcoreapp3.1\WindowSettings.baml

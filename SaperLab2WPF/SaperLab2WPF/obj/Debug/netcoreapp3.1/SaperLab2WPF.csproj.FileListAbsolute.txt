@@ -20,10 +20,10 @@ C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\Sa
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\SaperLab2WPF.csproj.GenerateResource.cache
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\SaperLab2WPF.Resource1.resources
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\bin\Debug\netcoreapp3.1\Microsoft.Xaml.Behaviors.dll
-C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowNotMain.g.cs
-C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowNotMain.baml
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\SaperLab2WPF.csproj.CopyComplete
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowStatistics.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowStatistics.baml
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\SaperLab2WPF.csproj.AssemblyReference.cache
+C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowSettings.g.cs
+C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowSettings.baml

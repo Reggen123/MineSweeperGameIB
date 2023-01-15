@@ -7,7 +7,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="WindowNotMain.xaml.cs">
+    <Compile Update="WindowSettings.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -18,7 +18,7 @@
     <Page Update="WindowStatistics.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WindowNotMain.xaml">
+    <Page Update="WindowSettings.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

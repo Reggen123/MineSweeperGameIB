@@ -154,10 +154,20 @@
                     "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
                     "ProductCode" = "8:.NETFramework,Version=v4.7.2"
                     }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.3.1.x64"
+                    {
+                    "Name" = "8:.NET Core Runtime 3.1.32 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.3.1.x64"
+                    }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.CoreRuntime.3.1.x86"
                     {
                     "Name" = "8:.NET Core Runtime 3.1.32 (x86)"
                     "ProductCode" = "8:Microsoft.NetCore.CoreRuntime.3.1.x86"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.3.1.x64"
+                    {
+                    "Name" = "8:.NET Desktop Runtime 3.1.32 (x64)"
+                    "ProductCode" = "8:Microsoft.NetCore.DesktopRuntime.3.1.x64"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.NetCore.DesktopRuntime.3.1.x86"
                     {
@@ -552,7 +562,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MineSweeper"
         "ProductCode" = "8:{919F8E23-6953-4A77-A634-94EC21F0EE16}"
-        "PackageCode" = "8:{1B727667-B374-4674-869A-7412ED9EB27B}"
+        "PackageCode" = "8:{C6B394BE-6566-4D66-AB3C-81DEF59C1A2F}"
         "UpgradeCode" = "8:{DE6B97A2-6B41-41F4-95BF-F15A0F18174D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

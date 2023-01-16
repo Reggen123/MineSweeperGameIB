@@ -22,7 +22,7 @@ namespace SaperLab2WPF
         private GameDifficulty diffuclty;
         public static GameManager singleton;
 
-        public int Time;
+        private int time;
         public bool WinWithOnlyCellOpening;
         public bool IsQuestionsEnabled;
         public bool IsAnimationsWork;
@@ -96,6 +96,31 @@ namespace SaperLab2WPF
                     return true;
             }
         }
+        public int Time
+        {
+            get
+            {
+                return this.time;
+            }
+            set
+            {
+                if (value < 0)
+                    this.time = 0;
+                else
+                    this.time = value;
+            }
+        }
+
+        public int FlagsLeft
+        {
+            get
+            {
+                if (minesCount - cellsFlagged < 0)
+                    return 0;
+                else
+                    return minesCount - cellsFlagged;
+            }
+        }
 
         public GameDifficulty Difficulty
         {
@@ -118,14 +143,14 @@ namespace SaperLab2WPF
                         {
                             Rows = 16;
                             Cols = 16;
-                            minesCount = 17;
+                            minesCount = 40;
                             break;
                         }
                     case GameDifficulty.Hard:
                         {
                             Rows = 16;
                             Cols = 30;
-                            minesCount = 21;
+                            minesCount = 99;
                             break;
                         }
                 }
@@ -175,7 +200,7 @@ namespace SaperLab2WPF
             IsCtrlDown = false;
             Difficulty = diffuclty;
             State = GameState.Started;
-            Time = 1;
+            Time = 0;
             RemoveObservers(true);
             GetBlankField();
             SaveHistory();
@@ -296,16 +321,13 @@ namespace SaperLab2WPF
         }
         private void OpenAllMines()
         {
-            int time = 0;
-            foreach(var c in Cells)
-            {
-                if (c.IsMine)
-                {
-                    c.IsForcedOpened = true;
-                    if(IsAnimationsWork)
-                        c.Detonate(time++);
-                }
-            }
+            //foreach(var c in Cells)
+            //{
+            //    if (c.IsMine)
+            //    {
+            //        c.IsForcedOpened = true;
+            //    }
+            //}
         }
         public void FirstCellOpen(int x, int y)
         {
@@ -349,7 +371,6 @@ namespace SaperLab2WPF
                 for (int j = 0; j < Cols; j++)
                 {
                     cells[i, j] = new Cell(null, false, i, j);
-                    AddObserver(cells[i, j], true);
                 }
             }
             Cells = cells;
@@ -506,6 +527,22 @@ namespace SaperLab2WPF
                 observer.UpdateCellClosed(x, y);
             foreach (IObserver observer in Tempobservers)
                 observer.UpdateCellClosed(x, y);
+        }
+
+        public void NotifyObserversCellOpenedForced(int x, int y)
+        {
+            foreach (IObserver observer in observers)
+                observer.UpdateCellOpenedForced(x, y);
+            foreach (IObserver observer in Tempobservers)
+                observer.UpdateCellOpenedForced(x, y);
+        }
+
+        public void NotifyObserversCQuestioned()
+        {
+            foreach (IObserver observer in observers)
+                observer.UpdateCQuestioned();
+            foreach (IObserver observer in Tempobservers)
+                observer.UpdateCQuestioned();
         }
     }
 

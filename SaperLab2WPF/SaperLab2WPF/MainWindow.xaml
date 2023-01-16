@@ -6,7 +6,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:SaperLab2WPF"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="450" MinWidth="800" MaxWidth="1200" MaxHeight="750"  SizeToContent="WidthAndHeight">
+        Title="MainWindow" MinHeight="450" MinWidth="500" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <ImageBrush  ImageSource="C:\flag2.jpg" x:Key="flag"/>
         <Style x:Key="NoAnimations" TargetType="{x:Type ToggleButton}" >
@@ -50,7 +50,7 @@
             <i:InvokeCommandAction Command="{Binding CtrlDownCommand}"/>
         </local:CtrlKeyUpEventTrigger>
     </i:Interaction.Triggers>
-    <Grid Margin="0,90,0,0" Focusable="True" MouseLeftButtonDown="Grid_MouseLeftButtonDown" x:Name="Grid1" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MaxWidth="1200" MaxHeight="700" ScrollViewer.CanContentScroll="True" Grid.IsSharedSizeScope="True">
+    <Grid Margin="0,90,0,0" Focusable="True" MouseLeftButtonDown="Grid_MouseLeftButtonDown" x:Name="Grid1" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Grid.IsSharedSizeScope="True">
         <ScrollViewer VerticalAlignment="Center" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Cells}" Height="{Binding MineFieldBorderLength}" Width="{Binding MineFieldBorderWidth}">
                 <ItemsControl.ItemsPanel>
@@ -90,26 +90,26 @@
         <Button Content="Статистика" HorizontalAlignment="Left" Margin="81,-90,0,0" VerticalAlignment="Top" Height="13" Width="76" Command="{Binding OpenStatisticsCommand}" FontSize="8"/>
         <Button Content="Подсказка" HorizontalAlignment="Left" Margin="162,-90,0,0" VerticalAlignment="Top" Height="13" Width="76" Command="{Binding HintCommand}" FontSize="8" IsEnabled="{Binding IsHintEnabled}"/>
         <Button Content="Отмена" HorizontalAlignment="Left" Margin="243,-90,0,0" VerticalAlignment="Top" Height="13" Width="76" Command="{Binding CancelCommand}" FontSize="8" IsEnabled="{Binding IsHistoryWorking}"/>
-        <Button HorizontalAlignment="Center" Margin="-60,-65,0,0" VerticalAlignment="Top" Height="65" Width="64" Command="{Binding RestartCommand}">
+        <Button HorizontalAlignment="Center" Margin="0,-65,0,0" VerticalAlignment="Top" Height="65" Width="64" Command="{Binding RestartCommand}">
             <StackPanel>
                 <Image Source="{Binding FaceRestartImage}" Stretch="UniformToFill"/>
             </StackPanel>
         </Button>
 
-        <Image Margin="0,-60,188,0" Stretch="UniformToFill" Source="{Binding Hundreds}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
-        <Image Margin="0,-60,121,0" Stretch="UniformToFill" Source="{Binding Dozens}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
-        <Image Margin="0,-60,55,0" Stretch="UniformToFill" Source="{Binding Units}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
+        <Image Margin="0,-60,143,0" Stretch="UniformToFill" Source="{Binding Hundreds}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
+        <Image Margin="0,-60,76,0" Stretch="UniformToFill" Source="{Binding Dozens}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
+        <Image Margin="0,-60,10,0" Stretch="UniformToFill" Source="{Binding Units}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="1"/>
 
-        <Image Margin="41,-60,0,0" Stretch="UniformToFill" Source="{Binding HundredsMinesLeft}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1"/>
-        <Image Margin="110,-60,0,0" Stretch="UniformToFill" Source="{Binding DozensMinesLeft}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1"/>
-        <Image Margin="178,-60,0,0" Stretch="UniformToFill" Source="{Binding UnitsMinesLeft}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1"/>
+        <Image Margin="3,-60,0,0" Stretch="UniformToFill" Source="{Binding HundredsMinesLeft}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1"/>
+        <Image Margin="72,-60,0,0" Stretch="UniformToFill" Source="{Binding DozensMinesLeft}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1"/>
+        <Image Margin="140,-60,0,0" Stretch="UniformToFill" Source="{Binding UnitsMinesLeft}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1"/>
 
-        <Image Margin="0,-60,188,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Image Margin="0,-60,121,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <Image Margin="0,-60,55,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Image Margin="0,-60,143,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Image Margin="0,-60,76,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Image Margin="0,-60,10,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
-        <Image Margin="41,-60,0,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image Margin="110,-60,0,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image Margin="178,-60,0,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image Margin="3,-60,0,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image Margin="72,-60,0,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image Margin="140,-60,0,0" Stretch="UniformToFill" Source="{StaticResource TimeBg}" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     </Grid>
 </Window>

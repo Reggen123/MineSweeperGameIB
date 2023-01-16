@@ -8,7 +8,9 @@ namespace SaperLab2WPF
 {
     class ApplyViewModelSettings: INotifyPropertyChanged
     {
-        private string labeltext;
+        private string labeltextX;
+        private string labeltextY;
+        private string labeltextMines;
         public ApplyViewModelSettings()
         {
             OnPropertyChanged("IsEasyLevelSelected");
@@ -155,12 +157,16 @@ namespace SaperLab2WPF
         {
             get
             {
-                return labeltext;
+                return labeltextX;
             }
             set
             {
-                if (int.TryParse(value, out GameManager.singleton.Rows))
-                    labeltext = value;
+                int rows = 0;
+                if (int.TryParse(value, out rows) && rows > 3 && rows < 25)
+                {
+                    GameManager.singleton.Rows = rows;
+                    labeltextX = value;
+                }
                 OnPropertyChanged("LabelTextX");
             }
         }
@@ -168,12 +174,16 @@ namespace SaperLab2WPF
         {
             get
             {
-                return labeltext;
+                return labeltextY;
             }
             set
             {
-                if (int.TryParse(value, out GameManager.singleton.Cols))
-                    labeltext = value;
+                int cols = 0;
+                if (int.TryParse(value, out cols) && cols > 3 && cols < 31)
+                {
+                    GameManager.singleton.Cols = cols;
+                    labeltextY = value;
+                }
                 OnPropertyChanged("LabelTextY");
             }
         }
@@ -181,12 +191,16 @@ namespace SaperLab2WPF
         {
             get
             {
-                return labeltext;
+                return labeltextMines;
             }
             set
             {
-                if (int.TryParse(value, out GameManager.singleton.minesCount))
-                    labeltext = value;
+                int mines = 0;
+                if (int.TryParse(value, out mines) && mines > 1 && mines < 669)
+                {
+                    GameManager.singleton.minesCount = mines;
+                    labeltextMines = value;
+                }
                 OnPropertyChanged("LabelTextMines");
             }
         }

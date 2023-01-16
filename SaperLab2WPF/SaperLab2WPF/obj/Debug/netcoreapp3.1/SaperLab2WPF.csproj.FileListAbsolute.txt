@@ -24,6 +24,6 @@ C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\Sa
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowStatistics.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowStatistics.baml
-C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\SaperLab2WPF.csproj.AssemblyReference.cache
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowSettings.g.cs
 C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\WindowSettings.baml
+C:\Users\belin\source\repos\SaperLab2WPF\SaperLab2WPF\obj\Debug\netcoreapp3.1\SaperLab2WPF.csproj.AssemblyReference.cache

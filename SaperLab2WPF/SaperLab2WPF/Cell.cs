@@ -13,7 +13,7 @@ using System.Windows.Threading;
 
 namespace SaperLab2WPF
 {
-    public class Cell : INotifyPropertyChanged, IObserver
+    public class Cell
     {
         private int? minescloseby;
         private bool ismine;
@@ -21,13 +21,12 @@ namespace SaperLab2WPF
         private bool isquestioned;
         private bool isflagged;
 
-        private int x;
-        private int y;
+        public int x;
+        public int y;
 
-        private int CurrentAnimation = 0;
+        public int CurrentAnimation = 0;
         private int CurrentAnimationTimeStart = 0;
         private bool AnimationStarted = false;
-        private DispatcherTimer Timer;
 
 
         public Cell(int? minesclose, bool isthismine, int x, int y)
@@ -50,10 +49,20 @@ namespace SaperLab2WPF
             this.isflagged = false;
             this.x = x;
             this.y = y;
-            OnPropertyChanged("MinesCloseBy");
-            OnPropertyChanged("Content");
         }
 
+        public int CurrentAnimationFrame
+        {
+            get
+            {
+                if (CurrentAnimation - CurrentAnimationTimeStart < 0)
+                    return 0;
+                else if (CurrentAnimation - CurrentAnimationTimeStart > 12)
+                    return 12;
+                else
+                    return CurrentAnimation - CurrentAnimationTimeStart;
+            }
+        }
         public int? MinesCloseBy
         {
             get
@@ -86,11 +95,6 @@ namespace SaperLab2WPF
                     return;
                 }
                 this.isopened = value;
-                OnPropertyChanged("IsOpened");
-                OnPropertyChanged("CurrentImage");
-                OnPropertyChanged("IsFreeToCheck");
-                OnPropertyChanged("IsFlagged");
-                OnPropertyChanged("BgColor");
                 if (this.ismine && GameManager.singleton.State == GameState.Started)
                 {
                     GameManager.singleton.Lose();
@@ -101,7 +105,6 @@ namespace SaperLab2WPF
                     GameManager.singleton.CellOpen(x, y);
             }
         }
-
         public bool IsForcedOpened
         {
             get
@@ -113,31 +116,7 @@ namespace SaperLab2WPF
                 this.isopened = value;
                 if (!value)
                     GameManager.singleton.CellClose(this.x, this.y);
-                OnPropertyChanged("IsOpened");
-                OnPropertyChanged("CurrentImage");
-                OnPropertyChanged("IsFreeToCheck");
-                OnPropertyChanged("IsFlagged");
-                OnPropertyChanged("BgColor");
-            }
-        }
-        public bool IsFreeToCheck
-        {
-            get
-            {
-                return !this.isopened;
-            }
-        }
-
-        public string BgColor
-        {
-            get
-            {
-                if (this.ismine && this.isopened)
-                    return "Red";
-                else if(this.isopened)
-                    return "LightGray";
-                else
-                    return "White";
+                GameManager.singleton.NotifyObserversCellOpenedForced(x, y);
             }
         }
         public bool IsFlagged
@@ -174,10 +153,8 @@ namespace SaperLab2WPF
                 }
                 GameManager.singleton.MinesFlagged += mine;
                 GameManager.singleton.CellsFlagged += cell;
-                OnPropertyChanged("CurrentImage");
             }
         }
-
         public bool IsQuestioned
         {
             get
@@ -187,31 +164,10 @@ namespace SaperLab2WPF
             set
             {
                 this.isquestioned = value;
-                OnPropertyChanged("CurrentImage");
+                GameManager.singleton.NotifyObserversCQuestioned();
             }
         }
-
-        public ImageSource CurrentImage
-        {
-            get
-            {
-                if (CurrentAnimation - CurrentAnimationTimeStart < 0)
-                    CurrentAnimation = CurrentAnimationTimeStart;
-                if (isflagged)
-                    return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject("flagpixel"));
-                else if (isquestioned)
-                    return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject("QuestionMark"));
-                else if (isopened && ismine)
-                    return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"mineanim{CurrentAnimation - CurrentAnimationTimeStart}"));
-                else if (isopened && minescloseby != null && minescloseby != 0)
-                    return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"_{minescloseby}pixel"));
-                else
-                    return null;
-
-            }
-        }
-
-        private void OpenNearBy(int xl, int yl)
+        public void OpenNearBy(int xl, int yl)
         {
             if (xl < GameManager.singleton.Cells.GetLength(0) && yl < GameManager.singleton.Cells.GetLength(1) &&
                 x < GameManager.singleton.Cells.GetLength(0) && y < GameManager.singleton.Cells.GetLength(1) &&
@@ -222,7 +178,6 @@ namespace SaperLab2WPF
                 this.IsOpened = true;
             }
         }
-
         public void OpenAccord()
         {
             int i = x;
@@ -251,172 +206,53 @@ namespace SaperLab2WPF
 
         //RelayCommands:
 
-        RelayCommand? flagCommand;
-        public RelayCommand FlagCommand
+        public void FlagIt()
         {
-            get
-            {
-                return flagCommand ??
-                  (flagCommand = new RelayCommand(obj =>
-                  {
-                      if (this.isopened)
-                          return;
-                      if(IsFlagged)
-                      {
-                          if (GameManager.singleton.IsQuestionsEnabled)
-                              IsQuestioned = true;
-                          IsFlagged = false;
-                      }    
-                      else if(IsQuestioned)
-                          IsQuestioned = false;
-                      else
-                        IsFlagged = true;
-                      if(GameManager.singleton.FirstCellOpened)
-                      {
-                          GameManager.singleton.SaveHistory();
-                          GameManager.singleton.SaveGame();
-                      }
-                  }));
-            }
-        }
-
-        RelayCommand? accordCommand;
-        public RelayCommand AccordCommand
-        {
-            get
-            {
-                return accordCommand ??
-                  (accordCommand = new RelayCommand(obj =>
-                  {
-                      if(GameManager.singleton.IsCtrlDown)
-                        OpenAccord();
-                  }));
-            }
-        }
-
-        RelayCommand? openCommand;
-        public RelayCommand OpenCommand
-        {
-            get
-            {
-                return openCommand ??
-                  (openCommand = new RelayCommand(obj =>
-                  {
-                      GameManager.singleton.SaveHistory();
-                      GameManager.singleton.SaveGame();
-                  }));
-            }
-        }
-
-        RelayCommand? pointCommand;
-        public RelayCommand PointCommand
-        {
-            get
-            {
-                return pointCommand ??
-                  (pointCommand = new RelayCommand(obj =>
-                  {
-                      if (!this.isopened &&GameManager.singleton.State == GameState.Started)
-                          GameManager.singleton.CellPoint(true);
-                  }));
-            }
-        }
-
-        RelayCommand? stoppointCommand;
-        public RelayCommand StopPointCommand
-        {
-            get
-            {
-                return stoppointCommand ??
-                  (stoppointCommand = new RelayCommand(obj =>
-                  {
-                      if(GameManager.singleton.State == GameState.Started)
-                        GameManager.singleton.CellPoint(false);
-                  }));
-            }
-        }
-
-
-        //Timer:
-
-        public void Detonate(int waittime)
-        {
-            if (AnimationStarted)
+            if (this.isopened)
                 return;
-            AnimationStarted = true;
-            CurrentAnimationTimeStart = waittime;
-            startTimer();
-        }
-        private void startTimer()
-        {
-            Timer = new DispatcherTimer();
-            Timer.Tick += new EventHandler(this.Timer_Tick);
-            Timer.Interval = new TimeSpan(0, 0, 0, 0, 25);
-            Timer.Start();
-        }
-
-        private void endtimer()
-        {
-            Timer.Tick -= new EventHandler(this.Timer_Tick);
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            CurrentAnimation++;
-            if (CurrentAnimation - CurrentAnimationTimeStart < 0)
-                return;
-            if (CurrentAnimation - CurrentAnimationTimeStart > 11)
+            if (IsFlagged)
             {
-                Timer.Stop();
-                endtimer();
+                if (GameManager.singleton.IsQuestionsEnabled)
+                    IsQuestioned = true;
+                IsFlagged = false;
             }
-            OnPropertyChanged("CurrentImage");
+            else if (IsQuestioned)
+                IsQuestioned = false;
+            else
+                IsFlagged = true;
+            if (GameManager.singleton.FirstCellOpened)
+            {
+                GameManager.singleton.SaveHistory();
+                GameManager.singleton.SaveGame();
+            }
         }
-
-        //OnPropeprtChanged:
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public void AccordIt()
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            if (GameManager.singleton.IsCtrlDown)
+                OpenAccord();
+        }
+        public void OpenIt()
+        {
+            GameManager.singleton.SaveHistory();
+            GameManager.singleton.SaveGame();
+        }
+        public void PointIt()
+        {
+            if (!this.isopened && GameManager.singleton.State == GameState.Started)
+                GameManager.singleton.CellPoint(true);
+        }
+        public void StopPointIt()
+        {
+            if (GameManager.singleton.State == GameState.Started)
+                GameManager.singleton.CellPoint(false);
         }
 
-        public void UpdateMFlagged(int count)
+        public void OpenAsMine()
         {
+            if(ismine)
+                isopened = true;
         }
 
-        public void UpdateCFlagged(int count)
-        {
-        }
 
-        public void UpdateCPointed(int count)
-        {
-        }
-
-        public void UpdateLose()
-        {
-        }
-
-        public void UpdateWin()
-        {
-        }
-
-        public void UpdateRestart()
-        {
-        }
-
-        public void UpdateFirstCellOpened(int x, int y)
-        {
-        }
-
-        public void UpdateCellOpened(int x, int y)
-        {
-            OpenNearBy(x, y);
-        }
-
-        public void UpdateCellClosed(int x, int y)
-        {
-        }
     }
 }

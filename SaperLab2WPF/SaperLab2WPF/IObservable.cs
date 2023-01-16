@@ -12,12 +12,14 @@ namespace SaperLab2WPF
 
         public void NotifyObserversMFlagged(int count);
         public void NotifyObserversCFlagged(int count);
+        public void NotifyObserversCQuestioned();
         public void NotifyObserversCPointed(int count);
         public void NotifyObserversLose();
         public void NotifyObserversWin();
         public void NotifyObserversRestart();
         public void NotifyObserversFirstCellOpened(int x, int y);
         public void NotifyObserversCellOpened(int x, int y);
+        public void NotifyObserversCellOpenedForced(int x, int y);
         public void NotifyObserversCellClosed(int x, int y);
     }
 
@@ -25,12 +27,14 @@ namespace SaperLab2WPF
     {
         public void UpdateMFlagged(int count);
         public void UpdateCFlagged(int count);
+        public void UpdateCQuestioned();
         public void UpdateCPointed(int count);
         public void UpdateLose();
         public void UpdateWin();
         public void UpdateRestart();
         public void UpdateFirstCellOpened(int x, int y);
         public void UpdateCellOpened(int x, int y);
+        public void UpdateCellOpenedForced(int x, int y);
         public void UpdateCellClosed(int x, int y);
     }
 }

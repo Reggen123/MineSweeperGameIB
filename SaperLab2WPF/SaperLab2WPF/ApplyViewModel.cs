@@ -12,7 +12,8 @@ namespace SaperLab2WPF
 {
     public class ApplyViewModel: INotifyPropertyChanged, IObserver
     {
-        private ObservableCollection<Cell> cells;
+        private ObservableCollection<CellApplyViewModel> cells;
+        private List<CellApplyViewModel> mines;
         private GameManager gameManager;
         private ImageSource facerestart;
 
@@ -23,6 +24,7 @@ namespace SaperLab2WPF
         private int windowborderlength;
 
         private DispatcherTimer Timer;
+        private DispatcherTimer AnimTimer;
         public ApplyViewModel()
         {
             if (Record.LoadGame("..\\Save") != null)
@@ -42,8 +44,7 @@ namespace SaperLab2WPF
             OnPropertyChanged("MineFieldCols");
         }
 
-
-        public ObservableCollection<Cell> Cells
+        public ObservableCollection<CellApplyViewModel> Cells
         {
             get
             {
@@ -206,7 +207,7 @@ namespace SaperLab2WPF
         {
             get
             {
-                return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"_{((int)(GameManager.singleton.minesCount - GameManager.singleton.CellsFlagged) / 100) % 10}time"));
+                return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"_{((int)(GameManager.singleton.FlagsLeft / 100)) % 10}time"));
             }
         }
 
@@ -214,7 +215,7 @@ namespace SaperLab2WPF
         {
             get
             {
-                return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"_{((int)(GameManager.singleton.minesCount - GameManager.singleton.CellsFlagged) / 10) % 10}time"));
+                return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"_{((int)(GameManager.singleton.FlagsLeft / 10)) % 10}time"));
             }
         }
 
@@ -222,7 +223,8 @@ namespace SaperLab2WPF
         {
             get
             {
-                return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"_{((int)GameManager.singleton.minesCount - GameManager.singleton.CellsFlagged) % 10}time"));            }
+                return ImageContainer.ByteToImage((byte[])Resource1.ResourceManager.GetObject($"_{(GameManager.singleton.FlagsLeft) % 10}time"));            
+            }
         }
 
 
@@ -255,15 +257,17 @@ namespace SaperLab2WPF
         }
         public void FirstCellOpened(int x, int y)
         {
-            cells.Clear();
             gameManager.GetGameField(x, y);
+            mines.Clear();
             for (int i = 0; i < GameManager.singleton.Rows; i++)
             {
                 for (int j = 0; j < GameManager.singleton.Cols; j++)
                 {
-                    cells.Add(gameManager.Cells[i,j]);
+                    CellApplyViewModel cell = cells[i * GameManager.singleton.Cols + j];
                     if (i == x && j == y)
-                        cells[cells.Count-1].IsOpened = true;
+                        cell.IsOpened = true;
+                    if (gameManager.Cells[i, j].IsMine)
+                        mines.Add(cell);
                 }
             }
             startTimer();
@@ -275,26 +279,41 @@ namespace SaperLab2WPF
             FaceImageChange(4);
         }
 
+        public void Lose()
+        {
+            //DetonateMines();
+            startTimerAnim();
+        }
+
         private void StartGame()
         {
-            cells = new ObservableCollection<Cell>();
+            cells = new ObservableCollection<CellApplyViewModel>();
+            GC.Collect();
+            mines = new List<CellApplyViewModel>();
+            GC.Collect();
             for (int i = 0; i < GameManager.singleton.Rows; i++)
             {
                 for (int j = 0; j < GameManager.singleton.Cols; j++)
                 {
-                    cells.Add(GameManager.singleton.Cells[i, j]);
+                    CellApplyViewModel cell = new CellApplyViewModel(GameManager.singleton.Cells[i, j]);
+                    cells.Add(cell);
+                    GameManager.singleton.AddObserver(cell, true);
+                    if (GameManager.singleton.Cells[i, j].IsMine)
+                        mines.Add(cell);
                 }
             }
-            MineFieldBorderWidth = MineFieldRows * 35;
-            MineFieldBorderLength = MineFieldCols * 35;
-            WindowBorderWidth += minefieldborderwidth-350;
-            WindowBorderLength += minefieldborderlength-350;
+            MineFieldBorderWidth = MineFieldRows * 40;
+            MineFieldBorderLength = MineFieldCols * 40;
+            WindowBorderWidth += minefieldborderwidth-500;
+            WindowBorderLength += minefieldborderlength-450;
             FaceImageChange(2);
             OnPropertyChanged("HundredsMinesLeft");
             OnPropertyChanged("DozensMinesLeft");
             OnPropertyChanged("UnitsMinesLeft");
+            OnPropertyChanged("Hundreds");
+            OnPropertyChanged("Dozens");
+            OnPropertyChanged("Units");
             OnPropertyChanged("Cells");
-            OnPropertyChanged("StartGameButtonText");
             OnPropertyChanged("MineFieldRows");
             OnPropertyChanged("MineFieldCols");
             OnPropertyChanged("IsHistoryWorking");
@@ -304,11 +323,8 @@ namespace SaperLab2WPF
         private void EndGame()
         {
             endtimer();
-            //cells = new ObservableCollection<Cell>();
-            OnPropertyChanged("IsGameStarted");
             OnPropertyChanged("CellsFlagged");
             OnPropertyChanged("Cells");
-            OnPropertyChanged("StartGameButtonText");
         }
 
         private void RestartGame()
@@ -321,14 +337,12 @@ namespace SaperLab2WPF
         }
 
 
-
-        //Timer:
+        //Timers:
         private void startTimer()
         {
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(Timer_Tick);
             Timer.Interval = new TimeSpan(0, 0, 1);
-            OnPropertyChanged("CurrentRoundTime");
             Timer.Start();
         }
 
@@ -338,16 +352,47 @@ namespace SaperLab2WPF
                 return;
             Timer.Tick -= new EventHandler(Timer_Tick);
             Timer.Stop();
-            OnPropertyChanged("CurrentRoundTime");
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             gameManager.Time++;
-            OnPropertyChanged("CurrentRoundTime");
             OnPropertyChanged("Hundreds");
             OnPropertyChanged("Dozens");
             OnPropertyChanged("Units");
+        }
+
+        private void startTimerAnim()
+        {
+            AnimTimer = new DispatcherTimer();
+            AnimTimer.Tick += new EventHandler(Timer_TickAnim);
+            AnimTimer.Interval = new TimeSpan(0, 0, 0, 0, 25);
+            AnimTimer.Start();
+        }
+
+        private void endtimerAnim()
+        {
+            if (AnimTimer == null)
+                return;
+            AnimTimer.Tick -= new EventHandler(Timer_TickAnim);
+            AnimTimer.Stop();
+        }
+
+        private void Timer_TickAnim(object sender, EventArgs e)
+        {
+            bool allminesdetonated = false;
+            foreach(var c in mines)
+            {
+                if (c.CurrentAnimationFrame > 11)
+                    continue;
+                c.AnimTick();
+                if(c.CurrentAnimationFrame < 12)
+                    allminesdetonated = true;
+            }
+            if (!allminesdetonated)
+            {
+                endtimerAnim();
+            }
         }
 
 
@@ -459,11 +504,14 @@ namespace SaperLab2WPF
 
         public void UpdateLose()
         {
+            Lose();
+            EndGame();
         }
 
         public void UpdateWin()
         {
             Win();
+            EndGame();
         }
 
         public void UpdateRestart()
@@ -481,6 +529,14 @@ namespace SaperLab2WPF
         }
 
         public void UpdateCellClosed(int x, int y)
+        {
+        }
+
+        public void UpdateCellOpenedForced(int x, int y)
+        {
+        }
+
+        public void UpdateCQuestioned()
         {
         }
     }

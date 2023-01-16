@@ -50,13 +50,21 @@ namespace SaperLab2WPF
             }
             string[] paths = Directory.EnumerateFiles(folder, ".", SearchOption.AllDirectories)
                 .Where(s => Path.GetExtension(s).TrimStart('.').ToLowerInvariant() == "json").ToArray();
-            string[] rec = new string[paths.Length];
+            List<string> rec = new List<string>();
             for (int i = 0; i < paths.Length; i++)
             {
                 string jsonstring = File.ReadAllText(paths[i]);
-                rec[i] = JsonSerializer.Deserialize<RecordInstance>(jsonstring).ToString();
+                try
+                {
+                    RecordInstance instance = JsonSerializer.Deserialize<RecordInstance>(jsonstring);
+                    rec.Add(instance.ToString());
+                }
+                catch
+                {
+
+                }
             }
-            return rec;
+            return rec.ToArray();
         }
 
         public static OverallRecordInstance ReadOverAllScore(string folder)
